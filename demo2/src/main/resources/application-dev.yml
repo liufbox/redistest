@@ -14,9 +14,3 @@ spring:
           max-wait: 3000 # 连接池最大阻塞等待时间（使用负值表示没有限制）
           min-idle: 10 # 连接池中的最小空闲连接
 
-  jr-live:
-    database: ${REDIS_DATABASE:0}
-    host: ${REDIS_HOST:192.168.2.55}
-    port: ${REDIS_PORT:6379}
-    password: ${REDIS_PASSWORD:}
-    timeout: 10000
