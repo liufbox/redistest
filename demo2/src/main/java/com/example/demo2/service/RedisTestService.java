@@ -5,6 +5,7 @@ import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
 @Slf4j
@@ -14,11 +15,16 @@ public class RedisTestService {
     private final RedisTemplate<String, Object> redisTemplate;
 
     private Integer count = 0;
+
+    Scheduler scheduler;
+
     public RedisTestService(ReactiveRedisTemplate reactiveRedisTemplate,
                             RedisTemplate<String, Object> redisTemplate){
 
         this.reactiveRedisTemplate =  reactiveRedisTemplate;
         this.redisTemplate = redisTemplate;
+
+        this.scheduler =  Schedulers.elastic();
     }
 
 
@@ -55,5 +61,10 @@ public class RedisTestService {
         return secretRedisMono.publishOn(Schedulers.elastic());
     }
 
+
+    public Mono<String> getTestValueV2(String key){
+        Mono<String> secretRedisMono = reactiveRedisTemplate.opsForValue().get(key);
+        return secretRedisMono.publishOn(scheduler);
+    }
 
 }

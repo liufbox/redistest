@@ -3,9 +3,12 @@ package com.example.demo1.conf;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.cluster.ClusterClientOptions;
 import io.lettuce.core.cluster.ClusterTopologyRefreshOptions;
+import io.lettuce.core.support.ConnectionPoolSupport;
 import java.time.Duration;
+import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,6 +66,7 @@ public class RedisConfig {
         redisStandaloneConfiguration.setPort(port);
         redisStandaloneConfiguration.setPassword(RedisPassword.of(password));
 
+
        /* ClusterTopologyRefreshOptions topologyRefreshOptions = ClusterTopologyRefreshOptions.builder()
                 //开启自适应刷新
                 //.enableAdaptiveRefreshTrigger(ClusterTopologyRefreshOptions.RefreshTrigger.MOVED_REDIRECT, ClusterTopologyRefreshOptions.RefreshTrigger.PERSISTENT_RECONNECTS)
@@ -90,6 +94,8 @@ public class RedisConfig {
         return new RedisLockRegistry(factory, "registry-key", 30000L);
     }
 
+
+
     @Bean
     public GenericObjectPoolConfig genericObjectPoolConfig() {
         GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
@@ -98,6 +104,7 @@ public class RedisConfig {
         genericObjectPoolConfig.setMaxTotal(maxTotal);
         genericObjectPoolConfig.setMaxWaitMillis(maxWait);
         genericObjectPoolConfig.setTimeBetweenEvictionRunsMillis(100);
+
         return genericObjectPoolConfig;
     }
 
