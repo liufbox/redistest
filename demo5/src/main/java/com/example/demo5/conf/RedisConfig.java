@@ -91,7 +91,7 @@ public class RedisConfig {
                 .build();
 
         LettuceConnectionFactory factory = new LettuceConnectionFactory(redisStandaloneConfiguration, clientConfig);
-//        factory.setShareNativeConnection(true);
+        factory.setShareNativeConnection(true);
 //        factory.setValidateConnection(false);
         return factory;
     }

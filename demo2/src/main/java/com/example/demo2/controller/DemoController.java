@@ -55,5 +55,11 @@ public class DemoController {
     }
 
 
+    @RequestMapping ("/demoTest5")
+    public Mono<String> demoTest5(@RequestParam(name = "key") String key) {
+        //log.info("key:{}", key);
+        return redisTestService.getTestValueV3(key);
+    }
+
 
 }

@@ -20,12 +20,12 @@ public class RedisTestService {
 
 
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    //private final RedisTemplate<String, Object> redisTemplate;
 
     public String getTestValue(String key){
 
         //log.info("##:{}", JSONObject.toJSONString(redisTemplate.getClientList()));
 
-        return  redisTemplate.opsForValue().get(key).toString();
+        return  stringRedisTemplate.opsForValue().get(key);
     }
 }
